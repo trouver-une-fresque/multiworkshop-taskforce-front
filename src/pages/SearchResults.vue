@@ -15,7 +15,7 @@
           class="online-switch"
           v-model="online"
           color="primary"
-          label="Inclure les ateliers en ligne"
+          :label="t('search.includeOnline')"
           hide-details
         ></v-switch>
 
@@ -23,7 +23,7 @@
         <div v-if="isSearchByCity()">
           <!-- desktop slider -->
           <div class="d-none d-sm-block text-caption mt-2">
-            Rayon de recherche
+            {{ t('search.area') }}
           </div>
           <v-slider
             class="d-none d-sm-block"
@@ -41,7 +41,7 @@
             {{
               tickDistances[distance] > 0
                 ? '' + tickDistances[distance] + 'km'
-                : 'tout'
+                : t('search.all')
             }}
           </div>
           <v-slider
@@ -68,19 +68,19 @@
           class="workshop-type-btn"
           value="atelier"
           variant="tonal"
-          >Participer à un atelier</v-tab
+          >{{ t('search.attendWorkshop') }}</v-tab
         >
         <v-tab
           class="workshop-type-btn"
           value="formation"
           variant="tonal"
-          >devenir animateur</v-tab
+          >{{ t('search.attendTrainingWorkshop') }}</v-tab
         >
         <v-tab
           class="workshop-type-btn"
           value="junior"
           variant="tonal"
-          >trouver un atelier junior</v-tab
+          >{{ t('search.attendJuniorWorkshop') }}</v-tab
         >
       </v-tabs>
       <!-- results -->
@@ -159,6 +159,9 @@
   } from '@/routing/DynamicURLs'
   import { AutocompleteItem, Commune, Departement, State } from '@/state/State'
   import { ref, onMounted } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const searchItem = ref<AutocompleteItem>({
     value: 0,
@@ -177,7 +180,7 @@
     2: '50 km',
     3: '100 km',
     4: '250 km',
-    5: 'Tout',
+    5: t('search.all'),
   }
 
   const mobileTickLabels = {
@@ -186,7 +189,7 @@
     2: '',
     3: '',
     4: '',
-    5: 'Tout',
+    5: t('search.all'),
   }
 
   const tickDistances = [10, 25, 50, 100, 250, -1]
@@ -289,14 +292,14 @@
       ret += selectedCity.value?.nom
       ret += ' (' + selectedCity.value?.codePostal + ')'
       if (online.value) {
-        ret += ' ou En ligne'
+        ret += ' ' + t('results.orOnline')
       }
     }
     if (isSearchByDpt()) {
       ret += selectedDpt.value?.nom_departement
       ret += ' (' + selectedDpt.value?.code_departement + ')'
       if (online.value) {
-        ret += ' ou En ligne'
+        ret += ' ' + t('results.orOnline')
       }
     }
     return ret

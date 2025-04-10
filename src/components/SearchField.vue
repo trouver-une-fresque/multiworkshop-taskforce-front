@@ -2,8 +2,8 @@
   <div>
     <router-view />
     <v-autocomplete
-    class="search-field"
-      label="Commune, Code postal, Département..."
+      class="search-field"
+      :label="t('searchField')"
       max-width="500px"
       variant="solo"
       no-data-text="Aucun résultat"
@@ -50,6 +50,9 @@
   } from '@/routing/DynamicURLs'
   import { AutocompleteItem, Commune, Departement, State } from '@/state/State'
   import { ref, onMounted } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     modelValue: {
@@ -75,7 +78,7 @@
     }
     const suggestions = await State.current.autocomplete.suggest(searchTerm)
     let uid = 0
-    autocompleteMatches.value = suggestions.map((suggestion : any) => ({
+    autocompleteMatches.value = suggestions.map((suggestion: any) => ({
       value: uid++,
       title: suggestion.nom ?? suggestion.nom_departement,
       props: suggestion,
@@ -85,7 +88,7 @@
   async function goToSearchResults(selected: AutocompleteItem | null) {
     const autocomplete = document.querySelector('.v-autocomplete input')
     if (autocomplete) {
-      (autocomplete as any).blur()
+      ;(autocomplete as any).blur()
     }
 
     if (!selected) return
@@ -138,11 +141,11 @@
 </script>
 
 <style scoped>
-.search-field{
-  &:deep(.v-autocomplete__selection){
-    white-space: nowrap !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .search-field {
+    &:deep(.v-autocomplete__selection) {
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
-}
 </style>

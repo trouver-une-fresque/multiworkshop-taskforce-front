@@ -1,45 +1,22 @@
 <template>
   <v-container>
     <div>
-      <h1>Mentions légales</h1>
-      <h2>Édition</h2>
-      <p>
-        Le présent site est édité par
-        <a href="https://github.com/thomas-bouvier">Thomas Bouvier</a> et
-        <a href="https://github.com/TimotF">Timothé Frignac</a> et hébergé par
-        la société Hostinger, dont le siège social est situé HOSTINGER
-        INTERNATIONAL LTD, 61 Lordou Vironos Street, 6023 Larnaca, Chypre,
-        joignable par le moyen suivant :
-        <a href="https://www.hostinger.fr/contact"
-          >https://www.hostinger.fr/contact</a
-        >.
-      </p>
-      <h2>Données personnelles</h2>
-      <p>
-        Votre adresse IP et la référence de la page visitée font partie des
-        informations personnelles enregistrées sur le serveur qui héberge ce
-        site.
-      </p>
-      <p>
-        Ces données peuvent éventuellement servir à diagnostiquer un problème,
-        mais elles ne seront jamais transmises à des tiers et elles sont
-        supprimées automatiquement.
-      </p>
-      <p>
-        Pour toute question concernant vos données personnelles, vous pouvez
-        nous contacter à l'adresse suivante : contact@trouverunefresque.org
-      </p>
-      <h2>Licence</h2>
-      <p>
-        <a
-          href="https://github.com/trouver-une-fresque/multiworkshop-taskforce-front/blob/main/LICENSE"
-          >AGPL-3.0</a
-        >
-      </p>
+      <h2 class="text-primary">{{ t('legal_mentions.title') }}</h2>
+      <div
+        v-for="key in sections"
+        :key="key"
+      >
+        <h3 v-html="t(`legal_mentions.sections.${key}.title`)"></h3>
+        <p v-html="t(`legal_mentions.sections.${key}.content`)"></p>
+      </div>
     </div>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-  //
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
+
+  const sections = ['edition', 'personal_data', 'license']
 </script>

@@ -21,14 +21,19 @@
           size="large"
         ></v-icon>
         {{ filteredWorkshops.length }} {{ getWorkshopType() }}
-        {{ searchByDpt ? 'pour' : 'autour de' }}
+        <span v-if="searchByDpt">
+          {{ t('results.for') + ' ' }}
+        </span>
+        <span v-else>
+          {{ t('results.around') + ' ' }}
+        </span>
         <strong>{{ locationTitle }}</strong></v-card-title
       >
       <v-card-subtitle
         class="text-center"
         style="white-space: wrap"
       >
-        Dernière mise à jour : {{ getLastUpdateRelativeDate() }}
+        {{ t('results.lastUpdate') }} {{ getLastUpdateRelativeDate() }}
       </v-card-subtitle>
     </v-card>
 
@@ -59,7 +64,7 @@
         class="text-center"
         style="white-space: wrap"
       >
-        Souhaitez vous inclure les ateliers en ligne ?
+        {{ t('results.doYouWantOnline') }}
       </v-card-title>
       <v-card-actions class="d-flex justify-center">
         <v-btn
@@ -68,7 +73,7 @@
           variant="elevated"
           ripple
         >
-          Voir les ateliers en ligne
+          {{ t('results.includeOnline') }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -79,6 +84,9 @@
   import { CodeDepartement, SearchType, Workshop } from '@/common/Conf'
   import distanceBetween from '@/utils/distance'
   import { ref, onMounted } from 'vue'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     workshops: {
@@ -136,10 +144,10 @@
     const diff = now.getTime() - lastUpdate.getTime()
     const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24))
     if (diffDays === 0) {
-      return "aujourd'hui"
+      return t('results.today')
     }
     if (diffDays === 1) {
-      return 'hier'
+      return t('results.yesterday')
     }
     return `il y a ${diffDays} jours`
   }
@@ -147,10 +155,10 @@
   function getWorkshopType(usePlural = true) {
     const plural = usePlural && filteredWorkshops.value.length > 0 ? 's' : ''
     if (props.workshopType === 'junior') {
-      return 'atelier' + plural + ' junior' + plural
+      return t('results.workshop') + plural + ' ' + t('results.junior') + plural
     } else if (props.workshopType === 'formation') {
-      return 'formation' + plural
-    } else return 'atelier' + plural
+      return t('results.training') + plural
+    } else return t('results.workshop') + plural
   }
 
   function displayXMoreWorkshops(nb = 10) {

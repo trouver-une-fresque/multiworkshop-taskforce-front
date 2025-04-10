@@ -3,11 +3,7 @@
     <v-container max-width="1200px">
       <v-col>
         <v-row>
-          <p>
-            Trouver une Fresque n'est pas un outil officiel, n'est PAS exhaustif
-            et ne remplace pas une recherche manuelle notamment dans le cas où
-            aucun atelier disponible n'est proposé sur notre site.
-          </p>
+          <p>{{ t('footer') }}</p>
         </v-row>
         <v-row>
           <v-divider class="my-2"></v-divider>
@@ -21,7 +17,7 @@
             <a
               href="https://github.com/trouver-une-fresque/multiworkshop-taskforce-front/blob/main/LICENSE"
               style="text-decoration: none; color: inherit"
-              >Trouver&nbsp;une&nbsp;Fresque - AGPL-3.0</a
+              >{{ t('buttons.license') }}</a
             >
           </v-col>
           <v-spacer></v-spacer>
@@ -36,7 +32,7 @@
               to="/mentions-legales"
               variant="text"
             >
-              Mentions légales
+              {{ t('buttons.legal') }}
             </v-btn>
             <v-btn
               class="mr-2"
@@ -44,7 +40,7 @@
               href="mailto:contact@trouverunefresque.org"
               variant="text"
             >
-              Contact
+              {{ t('buttons.contact') }}
             </v-btn>
             <v-btn
               elevation="0"
@@ -61,9 +57,11 @@
 </template>
 
 <script setup lang="ts">
+  import { useI18n } from 'vue-i18n'
   import { useTheme } from 'vuetify'
 
   const theme = useTheme()
+  const { t } = useI18n()
 
   function toggleTheme() {
     theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'

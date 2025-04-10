@@ -32,6 +32,9 @@
         >
           {{ link.text }}
         </v-tab>
+        <button @click="toggleLanguage" color="primary" class="ml-4">
+          {{ currentLanguage === 'en' ? 'Switch to French' : 'Switch to English' }}
+        </button>
       </v-tabs>
 
       <!-- navigation links (for small devices) -->
@@ -65,23 +68,30 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   import { useTheme } from 'vuetify'
-  // import { useRoute } from 'vue-router'
+  import { useI18n } from 'vue-i18n'
+
+  const { t, locale } = useI18n()
+  const currentLanguage = ref(locale.value);
 
   const activeTab = ref(0)
   // const route = useRoute()
   const menu = ref(false)
 
-  const links = [
+  const links = computed(() => [
     {
       id: 1,
       to: 'https://www.linkedin.com/company/trouver-une-fresque',
-      text: 'Actualités',
+      text: t('navigation.news'),
       icon: 'mdi-newspaper',
     },
-    { id: 2, to: '/carte', text: 'Carte des fresques', icon: 'mdi-map' },
-    { id: 3, to: '/apropos', text: 'A propos', icon: 'mdi-information' },
-  ]
-  // { id: 2, to: '/carte', text: 'Carte des fresques', icon: 'mdi-map' },
+    { id: 2, to: '/carte', text: t('navigation.map'), icon: 'mdi-map' },
+    {
+      id: 3,
+      to: '/apropos',
+      text: t('navigation.about'),
+      icon: 'mdi-information',
+    },
+  ]);
 
   const theme = useTheme()
 
@@ -90,6 +100,12 @@
       ? '/assets/images/svg/tuf-logo-landscape-fr.webp'
       : '/assets/images/svg/tuf-logo-landscape-fr.webp'
   })
+
+  const toggleLanguage = () => {
+    const newLocale = currentLanguage.value === 'en' ? 'fr' : 'en';
+    locale.value = newLocale;
+    currentLanguage.value = newLocale;
+  };
 </script>
 
 <style scoped lang="sass">

@@ -52,7 +52,7 @@
             size="large"
           >
             {{
-              workshop.sold_out ? '[Complet] - Vérifier' : 'Réserver une place'
+              workshop.sold_out ? t('resultsListing.soldOut') : t('resultsListing.book')
             }}
           </v-btn>
           <v-btn
@@ -62,7 +62,7 @@
             target="_blank"
             size="large"
           >
-            {{ workshop.sold_out ? '[COMPLET] - Vérifier' : 'Réserver' }}
+            {{ workshop.sold_out ? t('resultsListing.soldOut') : t('resultsListing.bookShort') }}
           </v-btn>
         </v-col>
       </v-row>
@@ -72,6 +72,9 @@
 
 <script setup lang="ts">
   import { ATELIERS, Workshop } from '@/common/Conf'
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
 
   const props = defineProps({
     workshop: {
@@ -107,7 +110,7 @@
 
   function getWorkshopAdress(workshop: Workshop): string {
     if (workshop.online) {
-      return 'En ligne'
+      return t('resultsListing.online')
     }
 
     let ret = ''

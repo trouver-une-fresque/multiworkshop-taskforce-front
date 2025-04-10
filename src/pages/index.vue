@@ -2,8 +2,11 @@
   <v-container max-width="1200px">
     <!-- Banner -->
     <v-banner class="greeting-banner">
-      <v-icon icon="mdi-information" color="primary"></v-icon>
-      <span>Trouver une Fresque va bientôt s'internationaliser ! En attendant, rendez-vous sur la <a href="https://www.findafresk.org">page du projet</a>, et suivez-nous sur <a href="https://www.linkedin.com/company/trouver-une-fresque">LinkedIn</a> !</span>
+      <v-icon
+        icon="mdi-information"
+        color="primary"
+      ></v-icon>
+      <span v-html="t('banner')"></span>
     </v-banner>
 
     <router-view />
@@ -14,7 +17,7 @@
         max-width="600px"
       >
         <h1 style="text-wrap-mode: wrap; max-width: 600px; text-align: center">
-          Trouvez une Fresque près de chez vous
+          {{ t('welcome') }}
         </h1>
       </v-card-title>
       <v-card-text class="d-flex justify-center">
@@ -30,7 +33,11 @@
   </v-container>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { useI18n } from 'vue-i18n'
+
+  const { t } = useI18n()
+</script>
 
 <style lang="scss" scoped>
   .search-card {
